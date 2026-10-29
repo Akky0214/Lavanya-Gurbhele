@@ -1,0 +1,6 @@
+{
+  "name": "EcoTwin Studio - Energy Efficiency 3D Lab & Intelligence",
+  "description": "Explore, simulate, and design high-efficiency energy systems and devices for homes and businesses with interactive 3D digital twins, live search grounding, and AI optimization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

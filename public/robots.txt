@@ -1,0 +1,10 @@
+# Robots.txt for EcoTwin Studio
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://ais-pre-fng6fde6wo53bjlwsahoes-405676268008.asia-east1.run.app/sitemap.xml
