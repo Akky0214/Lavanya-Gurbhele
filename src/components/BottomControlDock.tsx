@@ -144,7 +144,7 @@ export const BottomControlDock: React.FC<BottomControlDockProps> = ({
   const currentPhase = getDiurnalPhase(sunHour);
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 w-full max-w-4xl px-3 pointer-events-none">
+    <div className="fixed bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 z-20 w-full max-w-3xl px-2 sm:px-3 pointer-events-none">
       {/* Collapse / Expand Toggle Button */}
       <div className="flex justify-center mb-1.5 pointer-events-auto">
         <button

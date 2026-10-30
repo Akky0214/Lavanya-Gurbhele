@@ -26,7 +26,7 @@ export class SceneManager {
 
   private isSoftwareGl: boolean;
   private frameId = 0;
-  private clock = new THREE.Clock();
+  private lastTime = performance.now();
 
   // Active procedural models
   private currentSystemId: SystemId = 'heat_pump';
@@ -91,7 +91,7 @@ export class SceneManager {
     this.renderer.toneMappingExposure = 1.15;
     this.renderer.setPixelRatio(this.isSoftwareGl ? 1 : Math.min(window.devicePixelRatio, 2));
     this.renderer.shadowMap.enabled = !this.isSoftwareGl;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
 
     const width = this.container.clientWidth || window.innerWidth;
     const height = this.container.clientHeight || window.innerHeight;
@@ -190,7 +190,9 @@ export class SceneManager {
     };
 
     const tick = () => {
-      const delta = Math.min(this.clock.getDelta(), 0.1);
+      const now = performance.now();
+      const delta = Math.min((now - this.lastTime) / 1000, 0.1);
+      this.lastTime = now;
 
       // Camera smooth target transition
       if (this.cameraTargetPos) {

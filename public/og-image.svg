@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#090d16"/>
+  <!-- Decorative Grid -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="1" opacity="0.4"/>
+    </pattern>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Radial Glow Behind Logo -->
+  <circle cx="600" cy="240" r="280" fill="#10b981" opacity="0.12" filter="blur(60px)"/>
+  <circle cx="700" cy="280" r="220" fill="#06b6d4" opacity="0.12" filter="blur(60px)"/>
+
+  <!-- Brand Emblem Cube / 3D Icon -->
+  <g transform="translate(560, 110)">
+    <rect x="0" y="0" width="80" height="80" rx="20" fill="url(#grad1)"/>
+    <path d="M40 22 L58 32 L58 52 L40 62 L22 52 L22 32 Z" stroke="#090d16" stroke-width="4" fill="none"/>
+    <path d="M40 22 L40 42 M58 32 L40 42 M22 32 L40 42" stroke="#090d16" stroke-width="3"/>
+  </g>
+
+  <!-- Title Text -->
+  <text x="600" y="250" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="56" font-weight="800" fill="#ffffff" letter-spacing="-1px">
+    EcoTwin 3D
+  </text>
+
+  <!-- Tagline Text -->
+  <text x="600" y="310" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="26" font-weight="600" fill="#38bdf8" letter-spacing="0.5px">
+    Energy Efficiency 3D Lab &amp; Physics Intelligence
+  </text>
+
+  <!-- Description -->
+  <text x="600" y="370" text-anchor="middle" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="20" font-weight="400" fill="#94a3b8">
+    Interactive 3D Digital Twins • Real-Time Physics • Circuit Schematics &amp; BOM • Gemini AI
+  </text>
+
+  <!-- Feature Pills -->
+  <g transform="translate(240, 440)">
+    <!-- Pill 1: Heat Pumps -->
+    <rect x="0" y="0" width="160" height="42" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="80" y="26" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="600" fill="#10b981">
+      Heat Pump COP
+    </text>
+
+    <!-- Pill 2: Solar Microgrid -->
+    <rect x="180" y="0" width="170" height="42" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="265" y="26" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="600" fill="#f59e0b">
+      Solar + LiFePO4
+    </text>
+
+    <!-- Pill 3: Smart Buildings -->
+    <rect x="370" y="0" width="170" height="42" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="455" y="26" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="600" fill="#06b6d4">
+      Smart Buildings
+    </text>
+
+    <!-- Pill 4: Circuit BOM -->
+    <rect x="560" y="0" width="160" height="42" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+    <text x="640" y="26" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="600" fill="#a855f7">
+      Hardware BOM
+    </text>
+  </g>
+
+  <!-- Domain Badge -->
+  <g transform="translate(480, 530)">
+    <rect x="0" y="0" width="240" height="36" rx="10" fill="#020617" stroke="#1e293b" stroke-width="1"/>
+    <text x="120" y="23" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="500" fill="#64748b">
+      ecotwin-3d.vercel.app
+    </text>
+  </g>
+</svg>

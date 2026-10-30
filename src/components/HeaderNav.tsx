@@ -22,6 +22,7 @@ import {
   Check,
   Search,
   ExternalLink,
+  Cpu,
 } from 'lucide-react';
 import { EnergySystemMeta, SimulationParams } from '../types/energy';
 
@@ -33,6 +34,7 @@ interface HeaderNavProps {
   onOpenQuickAudit: () => void;
   onOpenConfigurator: () => void;
   onOpenScorecard: () => void;
+  onOpenBomModal?: () => void;
   onOpenLifecycleTracker?: () => void;
   onOpenBlueprintStudio?: () => void;
   onOpenClimateAlert?: () => void;
@@ -53,6 +55,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
   onOpenQuickAudit,
   onOpenConfigurator,
   onOpenScorecard,
+  onOpenBomModal,
   onOpenLifecycleTracker,
   onOpenBlueprintStudio,
   onOpenClimateAlert,
@@ -64,7 +67,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
   onOpenGridCarbon,
   onStartTour,
 }) => {
-  const [openMenu, setOpenMenu] = useState<'ai' | 'engineering' | 'climate' | null>(null);
+  const [openMenu, setOpenMenu] = useState<'ai' | 'engineering' | 'climate' | 'mobile' | null>(null);
   const navRef = useRef<HTMLDivElement>(null);
 
   // Close menus on click outside
@@ -78,7 +81,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const toggleMenu = (menu: 'ai' | 'engineering' | 'climate') => {
+  const toggleMenu = (menu: 'ai' | 'engineering' | 'climate' | 'mobile') => {
     setOpenMenu((prev) => (prev === menu ? null : menu));
   };
 
@@ -90,28 +93,28 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-30 pointer-events-none p-3 sm:p-4">
+    <header className="fixed top-0 left-0 right-0 z-30 pointer-events-none p-2 sm:p-3">
       <div
         ref={navRef}
-        className="max-w-7xl mx-auto flex items-center justify-between gap-3"
+        className="max-w-7xl mx-auto flex flex-nowrap items-center justify-between gap-1.5 sm:gap-3"
       >
         {/* Left: Brand Identity & Active Archetype Spec */}
-        <div className="pointer-events-auto flex items-center gap-3 bg-slate-900/90 hover:bg-slate-900 border border-slate-800/90 rounded-2xl px-4 py-2 shadow-2xl backdrop-blur-xl transition-all">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-slate-950 font-bold shadow-md shadow-emerald-500/20">
-            <Leaf className="w-4 h-4 text-slate-950" />
+        <div className="pointer-events-auto flex items-center gap-2 sm:gap-3 bg-slate-900/90 hover:bg-slate-900 border border-slate-800/90 rounded-2xl px-2.5 sm:px-4 py-1.5 sm:py-2 shadow-2xl backdrop-blur-xl transition-all shrink-0">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-slate-950 font-bold shadow-md shadow-emerald-500/20 shrink-0">
+            <Leaf className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-950" />
           </div>
 
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-white tracking-tight">EcoTwin 3D</span>
-              <span className="text-[11px] text-slate-400 hidden sm:inline">
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs sm:text-sm font-bold text-white tracking-tight">EcoTwin 3D</span>
+              <span className="text-[10px] sm:text-[11px] text-slate-400 hidden sm:inline">
                 · {currentSystem.sector}
               </span>
             </div>
-            <div className="flex items-center gap-2 text-xs text-slate-400 mt-0.5">
+            <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-400 mt-0.5">
               <span className="text-emerald-400 font-medium">{currentSystem.standardRating}</span>
-              <span className="text-slate-600">·</span>
-              <span className="text-slate-300 font-mono text-[11px] tabular-nums">
+              <span className="text-slate-600 hidden xs:inline">·</span>
+              <span className="text-slate-300 font-mono text-[10px] sm:text-[11px] tabular-nums hidden xs:inline">
                 {currentSystem.co2ReductionAnnual}
               </span>
             </div>
@@ -279,6 +282,25 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
                   </button>
                 )}
 
+                {onOpenBomModal && (
+                  <button
+                    onClick={() => handleAction(onOpenBomModal)}
+                    className="w-full text-left p-2.5 rounded-xl hover:bg-slate-800/80 transition-colors flex items-start gap-2.5 cursor-pointer group"
+                  >
+                    <div className="p-1.5 rounded-lg bg-indigo-950/80 border border-indigo-800/60 text-indigo-300 mt-0.5">
+                      <Cpu className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-white group-hover:text-indigo-300">
+                        Components & Circuits BOM
+                      </div>
+                      <p className="text-[11px] text-slate-400 leading-relaxed mt-0.5">
+                        Schematic wiring, PCB pinouts, sensors, operating ranges & full BOM
+                      </p>
+                    </div>
+                  </button>
+                )}
+
                 <button
                   onClick={() => handleAction(onOpenScorecard)}
                   className="w-full text-left p-2.5 rounded-xl hover:bg-slate-800/80 transition-colors flex items-start gap-2.5 cursor-pointer group"
@@ -416,20 +438,20 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
         </div>
 
         {/* Right: Quick Telemetry & Utility Actions */}
-        <div className="pointer-events-auto flex items-center gap-2 bg-slate-900/90 border border-slate-800/90 rounded-2xl p-1.5 shadow-2xl backdrop-blur-xl">
+        <div className="pointer-events-auto flex items-center gap-1 sm:gap-2 bg-slate-900/90 border border-slate-800/90 rounded-2xl p-1 sm:p-1.5 shadow-2xl backdrop-blur-xl shrink-0">
           {/* Live Grid Carbon Indicator Pill */}
           {onOpenGridCarbon && (
             <button
               id="tour-grid-carbon"
               onClick={onOpenGridCarbon}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950/70 hover:bg-slate-800 border border-slate-800 hover:border-emerald-600/50 text-xs transition-colors cursor-pointer"
+              className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-slate-950/70 hover:bg-slate-800 border border-slate-800 hover:border-emerald-600/50 text-[11px] sm:text-xs transition-colors cursor-pointer"
               title="Real-Time Local Electric Grid Carbon Intensity"
             >
-              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="font-mono font-semibold text-emerald-300 tabular-nums">
                 {simParams.gridCarbonData
-                  ? `${simParams.gridCarbonData.carbonIntensityGPerKWh} g/kWh`
-                  : '295 g/kWh'}
+                  ? `${simParams.gridCarbonData.carbonIntensityGPerKWh} g`
+                  : '295 g'}
               </span>
             </button>
           )}
@@ -439,7 +461,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
             <button
               id="tour-daily-report"
               onClick={onOpenDailyReport}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-cyan-950/80 hover:bg-cyan-900 text-cyan-200 hover:text-white border border-cyan-800/70 text-xs font-semibold shadow-sm transition-colors cursor-pointer"
+              className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-cyan-950/80 hover:bg-cyan-900 text-cyan-200 hover:text-white border border-cyan-800/70 text-[11px] sm:text-xs font-semibold shadow-sm transition-colors cursor-pointer"
               title="Daily Energy Performance Summary & Downloadable PDF Report"
             >
               <BarChart3 className="w-3.5 h-3.5 text-cyan-400" />
@@ -452,21 +474,141 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
             <button
               id="tour-capture-scene"
               onClick={onOpenCaptureScene}
-              className="p-2 rounded-xl text-slate-400 hover:text-cyan-300 hover:bg-slate-800 border border-transparent hover:border-slate-700 transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-cyan-300 hover:bg-slate-800 border border-transparent hover:border-slate-700 transition-colors cursor-pointer"
               title="Capture 2K Scene Snapshot with Thermodynamic Overlays"
             >
-              <Camera className="w-4 h-4" />
+              <Camera className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
           )}
+
+          {/* Mobile All-Tools Menu Trigger (visible only on < md) */}
+          <div className="relative md:hidden">
+            <button
+              onClick={() => toggleMenu('mobile')}
+              className={`p-1.5 rounded-xl text-slate-300 hover:text-white transition-colors cursor-pointer ${
+                openMenu === 'mobile'
+                  ? 'bg-cyan-950 text-cyan-300 border border-cyan-700/80'
+                  : 'hover:bg-slate-800'
+              }`}
+              title="Open Navigation Hub"
+            >
+              <Sliders className="w-3.5 h-3.5 text-cyan-400" />
+            </button>
+
+            {openMenu === 'mobile' && (
+              <div className="absolute top-full right-0 mt-2 w-72 bg-slate-900/98 border border-slate-800 rounded-2xl p-2 shadow-2xl backdrop-blur-2xl z-50 animate-in fade-in slide-in-from-top-2 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 py-1">
+                  AI Intelligence
+                </div>
+                <button
+                  onClick={() => handleAction(onOpenDeepDesign)}
+                  className="w-full text-left p-2 rounded-xl hover:bg-slate-800/80 text-xs font-semibold text-purple-300 flex items-center gap-2 cursor-pointer"
+                >
+                  <Brain className="w-3.5 h-3.5" />
+                  <span>Deep Thermodynamic Design</span>
+                </button>
+                <button
+                  onClick={() => handleAction(onOpenQuickAudit)}
+                  className="w-full text-left p-2 rounded-xl hover:bg-slate-800/80 text-xs font-semibold text-amber-300 flex items-center gap-2 cursor-pointer"
+                >
+                  <Zap className="w-3.5 h-3.5" />
+                  <span>Fast Equipment Audit</span>
+                </button>
+                <button
+                  onClick={() => handleAction(onOpenSearch)}
+                  className="w-full text-left p-2 rounded-xl hover:bg-slate-800/80 text-xs font-semibold text-cyan-300 flex items-center gap-2 cursor-pointer"
+                >
+                  <Globe className="w-3.5 h-3.5" />
+                  <span>Live Web Tariffs & Rebates</span>
+                </button>
+
+                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 py-1 mt-2 border-t border-slate-800/80">
+                  Facility & Sizing
+                </div>
+                <button
+                  onClick={() => handleAction(onOpenConfigurator)}
+                  className="w-full text-left p-2 rounded-xl hover:bg-slate-800/80 text-xs font-semibold text-emerald-300 flex items-center gap-2 cursor-pointer"
+                >
+                  <Sliders className="w-3.5 h-3.5" />
+                  <span>System Sizing Configurator</span>
+                </button>
+                {onOpenBlueprintStudio && (
+                  <button
+                    onClick={() => handleAction(onOpenBlueprintStudio)}
+                    className="w-full text-left p-2 rounded-xl hover:bg-slate-800/80 text-xs font-semibold text-cyan-300 flex items-center gap-2 cursor-pointer"
+                  >
+                    <Layers className="w-3.5 h-3.5" />
+                    <span>Floorplan Blueprint Studio</span>
+                  </button>
+                )}
+                {onOpenBomModal && (
+                  <button
+                    onClick={() => handleAction(onOpenBomModal)}
+                    className="w-full text-left p-2 rounded-xl hover:bg-slate-800/80 text-xs font-semibold text-indigo-300 flex items-center gap-2 cursor-pointer"
+                  >
+                    <Cpu className="w-3.5 h-3.5" />
+                    <span>Components & Circuits BOM</span>
+                  </button>
+                )}
+                <button
+                  onClick={() => handleAction(onOpenScorecard)}
+                  className="w-full text-left p-2 rounded-xl hover:bg-slate-800/80 text-xs font-semibold text-teal-300 flex items-center gap-2 cursor-pointer"
+                >
+                  <Award className="w-3.5 h-3.5" />
+                  <span>Sustainability Scorecard</span>
+                </button>
+                {onOpenLifecycleTracker && (
+                  <button
+                    onClick={() => handleAction(onOpenLifecycleTracker)}
+                    className="w-full text-left p-2 rounded-xl hover:bg-slate-800/80 text-xs font-semibold text-indigo-300 flex items-center gap-2 cursor-pointer"
+                  >
+                    <CalendarClock className="w-3.5 h-3.5" />
+                    <span>Lifecycle & Maintenance AI</span>
+                  </button>
+                )}
+
+                <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 py-1 mt-2 border-t border-slate-800/80">
+                  Climate & ESG
+                </div>
+                {onOpenGlobalHeatmap && (
+                  <button
+                    onClick={() => handleAction(onOpenGlobalHeatmap)}
+                    className="w-full text-left p-2 rounded-xl hover:bg-slate-800/80 text-xs font-semibold text-cyan-300 flex items-center gap-2 cursor-pointer"
+                  >
+                    <Globe className="w-3.5 h-3.5" />
+                    <span>Global Renewable Heatmap</span>
+                  </button>
+                )}
+                {onOpenCarbonCalc && (
+                  <button
+                    onClick={() => handleAction(onOpenCarbonCalc)}
+                    className="w-full text-left p-2 rounded-xl hover:bg-slate-800/80 text-xs font-semibold text-teal-300 flex items-center gap-2 cursor-pointer"
+                  >
+                    <Leaf className="w-3.5 h-3.5" />
+                    <span>Carbon Footprint Calculator</span>
+                  </button>
+                )}
+                {onOpenClimateAlert && (
+                  <button
+                    onClick={() => handleAction(onOpenClimateAlert)}
+                    className="w-full text-left p-2 rounded-xl hover:bg-slate-800/80 text-xs font-semibold text-rose-300 flex items-center gap-2 cursor-pointer"
+                  >
+                    <ShieldAlert className="w-3.5 h-3.5" />
+                    <span>Climate Resilience & Alerts</span>
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
 
           {/* Guided Tour */}
           {onStartTour && (
             <button
               onClick={onStartTour}
-              className="p-2 rounded-xl text-slate-400 hover:text-amber-300 hover:bg-slate-800 border border-transparent hover:border-slate-700 transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-amber-300 hover:bg-slate-800 border border-transparent hover:border-slate-700 transition-colors cursor-pointer"
               title="Start Interactive Guided Tour"
             >
-              <HelpCircle className="w-4 h-4" />
+              <HelpCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
           )}
         </div>

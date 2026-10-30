@@ -1,4 +1,4 @@
-# Robots.txt for EcoTwin Studio
+# Robots.txt for EcoTwin 3D
 User-agent: Googlebot
 Allow: /
 Disallow: /api/
@@ -7,4 +7,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://ais-pre-fng6fde6wo53bjlwsahoes-405676268008.asia-east1.run.app/sitemap.xml
+Sitemap: https://ecotwin-3d.vercel.app/sitemap.xml

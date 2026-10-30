@@ -23,8 +23,8 @@ import { DailyEnergySummaryModal } from './components/DailyEnergySummaryModal';
 import { CaptureSceneModal } from './components/CaptureSceneModal';
 import { GlobalRenewableHeatmapModal } from './components/GlobalRenewableHeatmapModal';
 import { GridCarbonModal } from './components/GridCarbonModal';
-import { QuickWinsOverlay } from './components/QuickWinsOverlay';
-import { ViewportTelemetryHUD } from './components/ViewportTelemetryHUD';
+import { UnifiedSideDock } from './components/UnifiedSideDock';
+import { ComponentsAndCircuitsModal } from './components/ComponentsAndCircuitsModal';
 import { evaluateClimateResilience } from './data/climateAlertData';
 
 export default function App() {
@@ -81,6 +81,7 @@ export default function App() {
   const [isCaptureSceneOpen, setIsCaptureSceneOpen] = useState(false);
   const [isGlobalHeatmapOpen, setIsGlobalHeatmapOpen] = useState(false);
   const [isGridCarbonOpen, setIsGridCarbonOpen] = useState(false);
+  const [isBomModalOpen, setIsBomModalOpen] = useState(false);
   const [isTourOpen, setIsTourOpen] = useState(false);
 
   // Auto-launch Guided Tour for first-time visitors
@@ -234,10 +235,12 @@ export default function App() {
         sceneManagerRef={sceneManagerRef}
       />
 
-      {/* Floating 3D Viewport Live Telemetry HUD */}
-      <ViewportTelemetryHUD
+      {/* Unified Non-Overlapping Side Dock (Telemetry, Quick Wins & AI Copilot) */}
+      <UnifiedSideDock
         currentSystemId={currentSystemId}
         simParams={simParams}
+        onUpdateParams={handleUpdateParams}
+        onOpenFullBomModal={() => setIsBomModalOpen(true)}
       />
 
       {/* Top Header Navigation */}
@@ -252,6 +255,7 @@ export default function App() {
         onOpenQuickAudit={() => setIsQuickAuditOpen(true)}
         onOpenConfigurator={() => setIsConfiguratorOpen(true)}
         onOpenScorecard={() => setIsScorecardOpen(true)}
+        onOpenBomModal={() => setIsBomModalOpen(true)}
         onOpenLifecycleTracker={() => setIsLifecycleOpen(true)}
         onOpenBlueprintStudio={() => setIsBlueprintModalOpen(true)}
         onOpenClimateAlert={() => setIsClimateAlertOpen(true)}
@@ -382,6 +386,17 @@ export default function App() {
         onUpdateParams={handleUpdateParams}
       />
 
+      {/* Comprehensive Components & Circuit Architecture Explorer Modal */}
+      <ComponentsAndCircuitsModal
+        isOpen={isBomModalOpen}
+        onClose={() => setIsBomModalOpen(false)}
+        currentSystemId={currentSystemId}
+        onSelectComponentIn3D={(partId) => {
+          handleSelectComponent(partId, currentSystemId);
+          setIsBomModalOpen(false);
+        }}
+      />
+
       {/* Interactive Home Blueprint & Site Plan Placement Studio */}
       <BlueprintPlacementModal
         isOpen={isBlueprintModalOpen}
@@ -454,12 +469,6 @@ export default function App() {
         onUpdateGridCarbon={handleUpdateGridCarbon}
       />
 
-      {/* Context-Aware Actionable Quick Wins Notification Overlay */}
-      <QuickWinsOverlay
-        simParams={simParams}
-        currentSystemId={currentSystemId}
-        onApplyQuickWin={handleUpdateParams}
-      />
 
       {/* Lightweight Localized Interactive Guided Tour */}
       <GuidedTour

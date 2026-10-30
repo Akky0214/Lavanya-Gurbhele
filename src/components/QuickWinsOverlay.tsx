@@ -189,7 +189,7 @@ export const QuickWinsOverlay: React.FC<QuickWinsOverlayProps> = ({
   // Minimized Pill Mode
   if (isMinimized) {
     return (
-      <div className="fixed bottom-24 right-4 z-40 pointer-events-auto">
+      <div className="fixed top-20 right-4 z-20 pointer-events-auto">
         <button
           onClick={() => setIsMinimized(false)}
           className="flex items-center gap-2 px-3 py-2 rounded-2xl bg-slate-900/90 hover:bg-slate-800 border border-amber-500/50 hover:border-amber-400 text-amber-300 hover:text-white shadow-xl shadow-amber-950/20 backdrop-blur-md transition-all cursor-pointer group"
@@ -206,7 +206,7 @@ export const QuickWinsOverlay: React.FC<QuickWinsOverlayProps> = ({
 
   // Expanded Overlay Card Mode
   return (
-    <div className="fixed bottom-24 right-4 z-40 pointer-events-auto w-84 sm:w-92 bg-slate-900/95 border border-amber-500/40 rounded-2xl shadow-2xl shadow-slate-950/80 backdrop-blur-md overflow-hidden text-slate-100 transition-all duration-300 animate-in fade-in slide-in-from-bottom-3">
+    <div className="fixed top-20 right-4 z-20 pointer-events-auto w-80 sm:w-88 bg-slate-900/95 border border-amber-500/40 rounded-2xl shadow-2xl shadow-slate-950/80 backdrop-blur-md overflow-hidden text-slate-100 transition-all duration-300 animate-in fade-in slide-in-from-top-3">
       {/* Accent Header Stripe */}
       <div className="h-1 bg-gradient-to-r from-amber-500 via-emerald-400 to-cyan-500" />
 
